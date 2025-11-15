@@ -3,6 +3,7 @@ This module contains the main application.
 """
 
 import uvicorn
+
 from app import create_app
 from app.core.settings import settings
 
