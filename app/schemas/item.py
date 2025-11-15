@@ -8,6 +8,7 @@ from pydantic import BaseModel
 
 class SchemaBase(BaseModel):
     """Base schema for the item."""
+
     title: str
     description: str
     status: bool = True
@@ -15,6 +16,7 @@ class SchemaBase(BaseModel):
 
 class SchemaPatch(BaseModel):
     """Patch schema for the item."""
+
     title: str | None = None
     description: str | None = None
     status: bool = None
@@ -22,13 +24,16 @@ class SchemaPatch(BaseModel):
 
 class SchemaCreate(SchemaBase):
     """Create schema for the item."""
+
     pass
 
 
 class Schema(SchemaBase):
     """Schema for the item."""
+
     id: int
 
     class Config:
         """Config for the item."""
+
         from_attributes = False

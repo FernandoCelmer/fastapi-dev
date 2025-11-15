@@ -9,24 +9,16 @@ from app.core.database import Base, engine
 
 
 class Item(Base):
-    """Item Model
-    """
+    """Item Model"""
 
     __tablename__ = "item"
-    __table_args__ = {'extend_existing': True}
+    __table_args__ = {"extend_existing": True}
     id = Column(Integer, primary_key=True, index=True)
     title = Column(String(75))
     description = Column(String(100))
     status = Column(Boolean, default=False)
-    created_date = Column(
-        DateTime,
-        default=datetime.utcnow
-    )
-    update_date = Column(
-        DateTime,
-        default=datetime.utcnow,
-        onupdate=datetime.utcnow
-    )
+    created_date = Column(DateTime, default=datetime.utcnow)
+    update_date = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
 
 
 Base.metadata.create_all(bind=engine)

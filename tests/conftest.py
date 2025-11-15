@@ -31,11 +31,7 @@ def db_session():
         poolclass=StaticPool,
     )
 
-    TestingSessionLocal = sessionmaker(
-        autocommit=False,
-        autoflush=False,
-        bind=engine
-    )
+    TestingSessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
     Base.metadata.create_all(bind=engine)
     db = TestingSessionLocal()
@@ -61,7 +57,7 @@ def client(db_session):
         title="FastAPI Template",
         description="Amazing project with FastAPI!",
         version="0.1.0",
-        debug=settings.is_development
+        debug=settings.is_development,
     )
 
     test_app.add_middleware(
@@ -87,7 +83,7 @@ def test_user_data():
     return {
         "email": "test@example.com",
         "username": "testuser",
-        "password": "testpassword123"
+        "password": "testpassword123",
     }
 
 
@@ -102,23 +98,21 @@ def test_user(client, test_user_data):
 @pytest.fixture
 def auth_headers(client, test_user_data):
     """Get authentication headers for authenticated requests."""
-    response = client.post("/auth/login", json={
-        "email": test_user_data["email"],
-        "password": test_user_data["password"]
-    })
+    response = client.post(
+        "/auth/login",
+        json={"email": test_user_data["email"], "password": test_user_data["password"]},
+    )
     assert response.status_code == 200
     tokens = response.json()
-    return {
-        "Authorization": f"Bearer {tokens['access_token']}"
-    }
+    return {"Authorization": f"Bearer {tokens['access_token']}"}
 
 
 @pytest.fixture
 def refresh_token(client, test_user_data):
     """Get refresh token for testing."""
-    response = client.post("/auth/login", json={
-        "email": test_user_data["email"],
-        "password": test_user_data["password"]
-    })
+    response = client.post(
+        "/auth/login",
+        json={"email": test_user_data["email"], "password": test_user_data["password"]},
+    )
     assert response.status_code == 200
     return response.json()["refresh_token"]

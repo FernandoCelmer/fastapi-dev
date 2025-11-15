@@ -6,12 +6,10 @@ from fastapi import status
 
 class TestItem:
     """Tests for item endpoint."""
+
     def test_get_items_success_with_auth(self, client, auth_headers):
         """Test successful items retrieval with authentication."""
-        response = client.get(
-            "/api/v1/items",
-            headers=auth_headers
-        )
+        response = client.get("/api/v1/items", headers=auth_headers)
 
         assert response.status_code == status.HTTP_200_OK
         data = response.json()
@@ -21,10 +19,7 @@ class TestItem:
     def test_get_item_by_id_success_with_auth(self, client, auth_headers):
         """Test successful item retrieval by ID with authentication."""
         test_id = 1
-        response = client.get(
-            f"/api/v1/items/{test_id}",
-            headers=auth_headers
-        )
+        response = client.get(f"/api/v1/items/{test_id}", headers=auth_headers)
 
         assert response.status_code == status.HTTP_200_OK
         data = response.json()
@@ -47,8 +42,7 @@ class TestItem:
     def test_get_items_invalid_token(self, client):
         """Test items endpoint with invalid token."""
         response = client.get(
-            "/api/v1/items",
-            headers={"Authorization": "Bearer invalid_token"}
+            "/api/v1/items", headers={"Authorization": "Bearer invalid_token"}
         )
 
         assert response.status_code == status.HTTP_401_UNAUTHORIZED
@@ -58,7 +52,7 @@ class TestItem:
         test_id = 1
         response = client.get(
             f"/api/v1/items/{test_id}",
-            headers={"Authorization": "Bearer invalid_token"}
+            headers={"Authorization": "Bearer invalid_token"},
         )
 
         assert response.status_code == status.HTTP_401_UNAUTHORIZED
@@ -67,8 +61,7 @@ class TestItem:
         """Test items endpoint with expired token."""
         expired_token = "expired_token_placeholder"
         response = client.get(
-            "/api/v1/items",
-            headers={"Authorization": f"Bearer {expired_token}"}
+            "/api/v1/items", headers={"Authorization": f"Bearer {expired_token}"}
         )
 
         assert response.status_code == status.HTTP_401_UNAUTHORIZED
@@ -79,7 +72,7 @@ class TestItem:
         expired_token = "expired_token_placeholder"
         response = client.get(
             f"/api/v1/items/{test_id}",
-            headers={"Authorization": f"Bearer {expired_token}"}
+            headers={"Authorization": f"Bearer {expired_token}"},
         )
 
         assert response.status_code == status.HTTP_401_UNAUTHORIZED

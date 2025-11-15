@@ -4,7 +4,7 @@ This module contains the FastAPI application.
 
 __version__ = "0.1.0"
 
-__author__ = 'Fernando Celmer <fernando-celmer@fernandocelmer.com>'
+__author__ = "Fernando Celmer <fernando-celmer@fernandocelmer.com>"
 
 
 from fastapi import FastAPI
@@ -18,7 +18,7 @@ app = FastAPI(
     title="FastAPI Template",
     description="Amazing project with FastAPI!",
     version=__version__,
-    debug=settings.is_development
+    debug=settings.is_development,
 )
 
 

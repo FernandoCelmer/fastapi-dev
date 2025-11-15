@@ -15,45 +15,36 @@ from app.core.database import Database
 auth = APIRouter(tags=["Auth"])
 
 
-@auth.post('/signup')
-async def signup(
-        user: SchemaSignup,
-        db: Session = Depends(Database.get_db)):
+@auth.post("/signup")
+async def signup(user: SchemaSignup, db: Session = Depends(Database.get_db)):
     query_user = ControllerAuthUser(db=db).read(params={"email": user.email})
 
     if query_user:
-        raise HTTPException(
-            status_code=422,
-            detail='Account already exists'
-        )
+        raise HTTPException(status_code=422, detail="Account already exists")
 
     hashed_password = auth_handler.encode_password(user.password.get_secret_value())
     query_user = ControllerAuthUser(db=db).create(
         data={
             "email": user.email,
             "username": user.username,
-            "password": hashed_password})
+            "password": hashed_password,
+        }
+    )
 
     return SchemaSignup(**query_user.__dict__)
 
 
-@auth.post('/login')
-async def login(
-        user: SchemaLogin,
-        db: Session = Depends(Database.get_db)):
+@auth.post("/login")
+async def login(user: SchemaLogin, db: Session = Depends(Database.get_db)):
     query_user = ControllerAuthUser(db=db).read(params={"email": user.email})
 
     if not query_user:
-        raise HTTPException(
-            status_code=401,
-            detail='Invalid email'
-        )
+        raise HTTPException(status_code=401, detail="Invalid email")
 
-    if (not auth_handler.verify_password(user.password.get_secret_value(), query_user.password)):
-        raise HTTPException(
-            status_code=401,
-            detail='Invalid password'
-        )
+    if not auth_handler.verify_password(
+        user.password.get_secret_value(), query_user.password
+    ):
+        raise HTTPException(status_code=401, detail="Invalid password")
 
     access_token = auth_handler.encode_token(query_user.email)
     refresh_token = auth_handler.encode_refresh_token(query_user.email)
@@ -61,9 +52,8 @@ async def login(
     return {"access_token": access_token, "refresh_token": refresh_token}
 
 
-@auth.get('/refresh_token')
-async def refresh_token(
-        credentials: HTTPAuthorizationCredentials = Security(security)):
+@auth.get("/refresh_token")
+async def refresh_token(credentials: HTTPAuthorizationCredentials = Security(security)):
     refresh_token = credentials.credentials
     new_token = auth_handler.refresh_token(refresh_token)
 

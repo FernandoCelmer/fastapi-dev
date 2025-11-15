@@ -8,12 +8,10 @@ from app.core.query import QueryData
 
 
 class BaseController:
-    """Base View to create helpers common to all Webservices.
-    """
+    """Base View to create helpers common to all Webservices."""
 
     def __init__(self, db: Session = None):
-        """Constructor
-        """
+        """Constructor"""
         self.close_session = None
         self.model_class = None
 
@@ -24,35 +22,34 @@ class BaseController:
             self.close_session = True
 
     def read(
-            self,
-            offset: int = 0,
-            limit: int = 100,
-            sort_by: str = 'id',
-            order_by: str = 'desc',
-            qtype: str = 'first',
-            params: dict = None,
-            **_kwargs):
-        """Get a record from the database.
-        """
+        self,
+        offset: int = 0,
+        limit: int = 100,
+        sort_by: str = "id",
+        order_by: str = "desc",
+        qtype: str = "first",
+        params: dict = None,
+        **_kwargs,
+    ):
+        """Get a record from the database."""
         if params is None:
             params = {}
         limit = limit if limit <= 100 else 100
-        query_data = QueryData(
-            model_class=self.model_class,
-            params=params
-        )
+        query_data = QueryData(model_class=self.model_class, params=params)
 
         try:
             query_model = self.db.query(self.model_class)
             for data in query_data:
-                query_model = query_model.filter(
-                    data.field == data.value
-                )
+                query_model = query_model.filter(data.field == data.value)
 
             sort_by = getattr(self.model_class, sort_by)
 
-            return getattr(query_model.order_by(
-                getattr(sort_by, order_by)()).offset(offset).limit(limit), qtype)()
+            return getattr(
+                query_model.order_by(getattr(sort_by, order_by)())
+                .offset(offset)
+                .limit(limit),
+                qtype,
+            )()
 
         except Exception as error:
             logging.error(error)
@@ -63,8 +60,7 @@ class BaseController:
                 self.db.close()
 
     def create(self, data: dict):
-        """Create a record in the database.
-        """
+        """Create a record in the database."""
         db_data = self.model_class(**data)
 
         try:
@@ -85,21 +81,14 @@ class BaseController:
             if self.close_session:
                 self.db.close()
 
-    def update(
-            self,
-            data: dict,
-            id: int = None,
-            params: dict = None):
-        """Edit a record in the database.
-        """
+    def update(self, data: dict, id: int = None, params: dict = None):
+        """Edit a record in the database."""
         if params is None:
             params = []
         try:
             query_model = self.db.query(self.model_class)
             if id:
-                query_model = query_model.filter(
-                    self.model_class.id == id
-                )
+                query_model = query_model.filter(self.model_class.id == id)
 
             if params:
                 for item in params:

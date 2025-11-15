@@ -15,8 +15,9 @@ auth_handler = BaseAuth()
 
 
 async def authorization(
-        db: Session = Depends(Database.get_db),
-        credentials: HTTPAuthorizationCredentials = Security(security)):
+    db: Session = Depends(Database.get_db),
+    credentials: HTTPAuthorizationCredentials = Security(security),
+):
     token = credentials.credentials
     payload = auth_handler.decode_token(token=token)
 
@@ -24,8 +25,7 @@ async def authorization(
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
             detail="Invalid authentication credentials",
-            headers={"WWW-Authenticate": "Bearer"}
+            headers={"WWW-Authenticate": "Bearer"},
         )
 
-    return ControllerAuthUser(db=db).read(
-        params={"email": payload.get('value')})
+    return ControllerAuthUser(db=db).read(params={"email": payload.get("value")})

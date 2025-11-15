@@ -11,10 +11,7 @@ class TestHealthCheck:
         """Test root endpoint (if exists)."""
         response = client.get("/")
 
-        assert response.status_code in [
-            status.HTTP_200_OK,
-            status.HTTP_404_NOT_FOUND
-        ]
+        assert response.status_code in [status.HTTP_200_OK, status.HTTP_404_NOT_FOUND]
 
     def test_docs_endpoint(self, client):
         """Test OpenAPI docs endpoint."""
@@ -37,11 +34,11 @@ class TestHealthCheck:
             "/auth/signup",
             headers={
                 "Origin": "http://localhost:3000",
-                "Access-Control-Request-Method": "POST"
-            }
+                "Access-Control-Request-Method": "POST",
+            },
         )
 
         assert response.status_code in [
             status.HTTP_200_OK,
-            status.HTTP_405_METHOD_NOT_ALLOWED
+            status.HTTP_405_METHOD_NOT_ALLOWED,
         ]
