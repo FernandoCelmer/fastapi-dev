@@ -3,7 +3,6 @@ This module contains the base controller.
 """
 
 import logging
-from typing import Any, Optional
 
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy.orm import Session
@@ -43,7 +42,9 @@ class BaseController:
         if self.model_class is None:
             raise ValueError("model_class must be set")
 
-        query_data: list[QueryField] = QueryData(model_class=self.model_class, params=params)  # type: ignore[assignment]
+        query_data: list[QueryField] = QueryData(
+            model_class=self.model_class, params=params
+        )
 
         try:
             query_model = self.db.query(self.model_class)
@@ -61,7 +62,7 @@ class BaseController:
 
         except Exception as error:
             logging.error(error)
-            raise Exception(error) from error
+            raise RuntimeError(str(error)) from error
 
         finally:
             if self.close_session:
@@ -85,13 +86,15 @@ class BaseController:
 
         except Exception as error:
             logging.error(error)
-            raise Exception(error) from error
+            raise RuntimeError(str(error)) from error
 
         finally:
             if self.close_session:
                 self.db.close()
 
-    def update(self, data: dict, id: int | None = None, params: dict | None = None):
+    def update(
+        self, data: dict, id: int | None = None, params: dict | None = None
+    ):
         """Edit a record in the database."""
         if self.model_class is None:
             raise ValueError("model_class must be set")
@@ -124,7 +127,7 @@ class BaseController:
 
         except Exception as error:
             logging.error(error)
-            raise Exception(error) from error
+            raise RuntimeError(str(error)) from error
 
         finally:
             if self.close_session:
