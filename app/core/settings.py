@@ -13,7 +13,10 @@ class Settings(BaseSettings):
     """Application settings loaded from environment variables."""
 
     model_config = SettingsConfigDict(
-        env_file=".env", env_file_encoding="utf-8", case_sensitive=False, extra="ignore"
+        env_file=".env",
+        env_file_encoding="utf-8",
+        case_sensitive=False,
+        extra="ignore",
     )
 
     scope: Literal["development", "production", "test"] = Field(
@@ -32,7 +35,9 @@ class Settings(BaseSettings):
 
     api_v1_prefix: str = Field(default="/api/v1", description="API v1 prefix")
 
-    cors_origins: list[str] = Field(default=["*"], description="Allowed CORS origins")
+    cors_origins: list[str] = Field(
+        default=["*"], description="Allowed CORS origins"
+    )
     access_token_expire_minutes: int = Field(
         default=30, description="Access token expiration time in minutes"
     )

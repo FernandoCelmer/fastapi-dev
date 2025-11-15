@@ -8,7 +8,7 @@ from sqlalchemy.orm import Session
 
 from app.core.auth.models.auth_user import ControllerAuthUser
 from app.core.auth.schemas.login import SchemaLogin
-from app.core.auth.schemas.signup import SchemaSignup
+from app.core.auth.schemas.signup import SchemaSignup, SchemaSignupResponse
 from app.core.auth.security import auth_handler, security
 from app.core.database import Database
 
@@ -22,7 +22,9 @@ async def signup(user: SchemaSignup, db: Session = Depends(Database.get_db)):
     if query_user:
         raise HTTPException(status_code=422, detail="Account already exists")
 
-    hashed_password = auth_handler.encode_password(user.password.get_secret_value())
+    hashed_password = auth_handler.encode_password(
+        user.password.get_secret_value()
+    )
     query_user = ControllerAuthUser(db=db).create(
         data={
             "email": user.email,
@@ -31,7 +33,9 @@ async def signup(user: SchemaSignup, db: Session = Depends(Database.get_db)):
         }
     )
 
-    return SchemaSignup(**query_user.__dict__)
+    return SchemaSignupResponse(
+        email=query_user.email, username=query_user.username
+    )
 
 
 @auth.post("/login")
@@ -53,7 +57,9 @@ async def login(user: SchemaLogin, db: Session = Depends(Database.get_db)):
 
 
 @auth.get("/refresh_token")
-async def refresh_token(credentials: HTTPAuthorizationCredentials = Security(security)):
+async def refresh_token(
+    credentials: HTTPAuthorizationCredentials = Security(security)
+):
     refresh_token = credentials.credentials
     new_token = auth_handler.refresh_token(refresh_token)
 

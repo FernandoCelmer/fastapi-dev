@@ -18,7 +18,9 @@ class Item(Base):
     description = Column(String(100))
     status = Column(Boolean, default=False)
     created_date = Column(DateTime, default=datetime.utcnow)
-    update_date = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
+    update_date = Column(
+        DateTime, default=datetime.utcnow, onupdate=datetime.utcnow
+    )
 
 
 Base.metadata.create_all(bind=engine)

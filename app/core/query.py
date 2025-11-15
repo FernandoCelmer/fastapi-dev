@@ -14,7 +14,9 @@ class QueryField:
 
 
 class QueryData:
-    def __new__(cls, model_class: Base, params: dict) -> list[QueryField]:  # type: ignore[misc]
+    def __new__(
+        cls, model_class: Base, params: dict
+    ) -> list[QueryField]:
         return cls.setup(model_class=model_class, params=params)
 
     def __init__(self, model_class: Base, params: dict) -> None:
@@ -45,9 +47,14 @@ class QueryData:
                     if str(field_value).lower() in ["false", "0"]:
                         field_value = False
 
-                if isinstance(field_model.type, Integer) and field_value is not None:
+                if (
+                    isinstance(field_model.type, Integer)
+                    and field_value is not None
+                ):
                     field_value = int(field_value)
 
-                query_data.append(QueryField(field=field_model, value=field_value))
+                query_data.append(
+                    QueryField(field=field_model, value=field_value)
+                )
 
         return query_data

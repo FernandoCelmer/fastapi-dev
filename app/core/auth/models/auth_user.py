@@ -25,7 +25,9 @@ class AuthUser(Base):
     is_staff = Column(Boolean, default=False)
     is_active = Column(Boolean, default=True)
     created_date = Column(DateTime, default=datetime.utcnow)
-    update_date = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
+    update_date = Column(
+        DateTime, default=datetime.utcnow, onupdate=datetime.utcnow
+    )
 
 
 class ControllerAuthUser(BaseController):

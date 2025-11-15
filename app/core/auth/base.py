@@ -54,12 +54,14 @@ class BaseAuth:
 
         except ExpiredSignatureError as error:
             raise HTTPException(
-                status_code=status.HTTP_401_UNAUTHORIZED, detail="Token Expired"
+                status_code=status.HTTP_401_UNAUTHORIZED,
+                detail="Token Expired",
             ) from error
 
         except InvalidTokenError as error:
             raise HTTPException(
-                status_code=status.HTTP_401_UNAUTHORIZED, detail="Invalid Token"
+                status_code=status.HTTP_401_UNAUTHORIZED,
+                detail="Invalid Token",
             ) from error
 
     def encode_refresh_token(self, email):
@@ -78,7 +80,9 @@ class BaseAuth:
     def refresh_token(self, refresh_token):
         """Refresh the token."""
         try:
-            payload = decode(jwt=refresh_token, key=self.secret, algorithms=["HS256"])
+            payload = decode(
+                jwt=refresh_token, key=self.secret, algorithms=["HS256"]
+            )
 
             if payload["scope"] == "refresh_token":
                 email = payload["value"]
@@ -92,10 +96,12 @@ class BaseAuth:
 
         except ExpiredSignatureError as error:
             raise HTTPException(
-                status_code=status.HTTP_401_UNAUTHORIZED, detail="Refresh Token Expired"
+                status_code=status.HTTP_401_UNAUTHORIZED,
+                detail="Refresh Token Expired",
             ) from error
 
         except InvalidTokenError as error:
             raise HTTPException(
-                status_code=status.HTTP_401_UNAUTHORIZED, detail="Invalid Refresh Token"
+                status_code=status.HTTP_401_UNAUTHORIZED,
+                detail="Invalid Refresh Token",
             ) from error

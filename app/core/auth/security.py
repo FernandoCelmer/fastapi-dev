@@ -28,4 +28,6 @@ async def authorization(
             headers={"WWW-Authenticate": "Bearer"},
         )
 
-    return ControllerAuthUser(db=db).read(params={"email": payload.get("value")})
+    return ControllerAuthUser(db=db).read(
+        params={"email": payload.get("value")}
+    )
