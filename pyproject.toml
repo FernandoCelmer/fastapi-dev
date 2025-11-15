@@ -1,6 +1,7 @@
 [tool.poetry]
 name = "cookiecutter-fastapi"
 version = "0.1.0"
+package-mode = false
 description = "Amazing project with FastAPI!"
 authors = ["Fernando Celmer <fernando-celmer@fernandocelmer.com>"]
 license = "MIT"
@@ -27,6 +28,8 @@ pytest = "^7.4.3"
 [tool.poetry.group.code-quality.dependencies]
 flake8 = "^6.1.0"
 coverage = "^7.3.2"
+ruff = "^0.1.0"
+mypy = "^1.7.0"
 
 
 [tool.poetry.group.dev.dependencies]
