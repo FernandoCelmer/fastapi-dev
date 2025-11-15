@@ -25,7 +25,7 @@ class Settings(BaseSettings):
     )
 
     secret_key: str = Field(
-        default="dev-key",
+        default="dev-key-change-in-production-min-32-characters",
         description="Secret key for JWT tokens and encryption",
         min_length=32,
     )
