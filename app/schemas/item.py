@@ -19,13 +19,11 @@ class SchemaPatch(BaseModel):
 
     title: str | None = None
     description: str | None = None
-    status: bool = None
+    status: bool | None = None
 
 
 class SchemaCreate(SchemaBase):
     """Create schema for the item."""
-
-    pass
 
 
 class Schema(SchemaBase):

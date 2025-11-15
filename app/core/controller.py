@@ -1,19 +1,24 @@
+"""
+This module contains the base controller.
+"""
+
 import logging
+from typing import Any, Optional
 
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy.orm import Session
 
-from app.core.database import engine
-from app.core.query import QueryData
+from app.core.database import Base, engine
+from app.core.query import QueryData, QueryField
 
 
 class BaseController:
     """Base View to create helpers common to all Webservices."""
 
-    def __init__(self, db: Session = None):
+    def __init__(self, db: Session | None = None):
         """Constructor"""
-        self.close_session = None
-        self.model_class = None
+        self.close_session: bool | None = None
+        self.model_class: type[Base] | None = None
 
         if db:
             self.db = db
@@ -28,14 +33,17 @@ class BaseController:
         sort_by: str = "id",
         order_by: str = "desc",
         qtype: str = "first",
-        params: dict = None,
+        params: dict | None = None,
         **_kwargs,
     ):
         """Get a record from the database."""
         if params is None:
             params = {}
         limit = limit if limit <= 100 else 100
-        query_data = QueryData(model_class=self.model_class, params=params)
+        if self.model_class is None:
+            raise ValueError("model_class must be set")
+
+        query_data: list[QueryField] = QueryData(model_class=self.model_class, params=params)  # type: ignore[assignment]
 
         try:
             query_model = self.db.query(self.model_class)
@@ -61,6 +69,8 @@ class BaseController:
 
     def create(self, data: dict):
         """Create a record in the database."""
+        if self.model_class is None:
+            raise ValueError("model_class must be set")
         db_data = self.model_class(**data)
 
         try:
@@ -81,10 +91,12 @@ class BaseController:
             if self.close_session:
                 self.db.close()
 
-    def update(self, data: dict, id: int = None, params: dict = None):
+    def update(self, data: dict, id: int | None = None, params: dict | None = None):
         """Edit a record in the database."""
+        if self.model_class is None:
+            raise ValueError("model_class must be set")
         if params is None:
-            params = []
+            params = {}
         try:
             query_model = self.db.query(self.model_class)
             if id:
