@@ -3,14 +3,11 @@ This module contains the base auth class.
 """
 
 from datetime import datetime, timedelta
-from passlib.context import CryptContext
-from jwt import (
-    encode,
-    decode,
-    ExpiredSignatureError,
-    InvalidTokenError
-)
+
 from fastapi import HTTPException, status
+from jwt import ExpiredSignatureError, InvalidTokenError, decode, encode
+from passlib.context import CryptContext
+
 from app.core.settings import settings
 
 

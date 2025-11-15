@@ -1,7 +1,7 @@
-from typing import List
+
+from sqlalchemy import Boolean, Integer
 
 from app.core.database import Base
-from sqlalchemy import Boolean, Integer
 
 
 class QueryField:
@@ -13,7 +13,7 @@ class QueryField:
 
 class QueryData:
 
-    def __new__(cls, model_class: Base, params: dict) -> List[QueryField]:
+    def __new__(cls, model_class: Base, params: dict) -> list[QueryField]:
         return cls.setup(
             model_class=model_class,
             params=params
@@ -28,7 +28,7 @@ class QueryData:
         return model_class.__table__.columns.keys()
 
     @classmethod
-    def setup(cls, model_class: Base, params: dict) -> List[QueryField]:
+    def setup(cls, model_class: Base, params: dict) -> list[QueryField]:
         query_data = []
         model_keys = cls.load_keys(
             model_class=model_class

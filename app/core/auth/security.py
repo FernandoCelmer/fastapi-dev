@@ -2,14 +2,13 @@
 This module contains the auth security.
 """
 
-from sqlalchemy.orm import Session
-from fastapi import status, Depends, Security, HTTPException
+from fastapi import Depends, HTTPException, Security, status
 from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
+from sqlalchemy.orm import Session
 
 from app.core.auth.base import BaseAuth
 from app.core.auth.models.auth_user import ControllerAuthUser
 from app.core.database import Database
-
 
 security = HTTPBearer()
 auth_handler = BaseAuth()

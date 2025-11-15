@@ -4,8 +4,9 @@ Settings configuration for the FastAPI application.
 
 from functools import lru_cache
 from typing import Literal
-from pydantic_settings import BaseSettings, SettingsConfigDict
+
 from pydantic import Field
+from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
 class Settings(BaseSettings):
@@ -59,7 +60,7 @@ class Settings(BaseSettings):
         return self.scope == "development"
 
 
-@lru_cache()
+@lru_cache
 def get_settings() -> Settings:
     """
     Get cached settings instance.

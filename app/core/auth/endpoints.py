@@ -2,16 +2,15 @@
 This module contains the auth endpoints.
 """
 
-from fastapi import APIRouter, HTTPException, Depends, Security
+from fastapi import APIRouter, Depends, HTTPException, Security
 from fastapi.security import HTTPAuthorizationCredentials
 from sqlalchemy.orm import Session
 
+from app.core.auth.models.auth_user import ControllerAuthUser
 from app.core.auth.schemas.login import SchemaLogin
 from app.core.auth.schemas.signup import SchemaSignup
-from app.core.auth.security import security, auth_handler
-from app.core.auth.models.auth_user import ControllerAuthUser
+from app.core.auth.security import auth_handler, security
 from app.core.database import Database
-
 
 auth = APIRouter(tags=["Auth"])
 

@@ -3,21 +3,19 @@ Configuration for pytest tests.
 """
 
 import os
-import pytest
 
-from fastapi.testclient import TestClient
+import pytest
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-
+from fastapi.testclient import TestClient
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.pool import StaticPool
 
+from app.api.v1 import api_router as v1_router
+from app.core.auth.endpoints import auth
 from app.core.database import Base, Database
 from app.core.settings import settings
-from app.core.auth.endpoints import auth
-from app.api.v1 import api_router as v1_router
-
 
 os.environ["SCOPE"] = "test"
 os.environ["DATABASE_URL"] = "sqlite:///:memory:"

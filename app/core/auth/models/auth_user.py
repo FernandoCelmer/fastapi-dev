@@ -3,15 +3,11 @@ This module contains the auth user model.
 """
 
 from datetime import datetime
-from sqlalchemy import (
-    Boolean,
-    Column,
-    DateTime,
-    String,
-    Integer
-)
-from app.core.database import Base, engine
+
+from sqlalchemy import Boolean, Column, DateTime, Integer, String
+
 from app.core.controller import BaseController
+from app.core.database import Base, engine
 
 
 class AuthUser(Base):

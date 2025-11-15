@@ -2,7 +2,7 @@
 This module contains the item schemas.
 """
 
-from typing import Optional
+
 from pydantic import BaseModel
 
 
@@ -15,8 +15,8 @@ class SchemaBase(BaseModel):
 
 class SchemaPatch(BaseModel):
     """Patch schema for the item."""
-    title: Optional[str] = None
-    description: Optional[str] = None
+    title: str | None = None
+    description: str | None = None
     status: bool = None
 
 

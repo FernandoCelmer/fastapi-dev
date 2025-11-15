@@ -10,10 +10,9 @@ __author__ = 'Fernando Celmer <fernando-celmer@fernandocelmer.com>'
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-from app.core.settings import settings
-from app.core.auth.endpoints import auth
 from app.api.v1 import api_router as v1_router
-
+from app.core.auth.endpoints import auth
+from app.core.settings import settings
 
 app = FastAPI(
     title="FastAPI Template",

@@ -2,13 +2,9 @@
 This module contains the item model.
 """
 from datetime import datetime
-from sqlalchemy import (
-    Boolean,
-    Column,
-    DateTime,
-    String,
-    Integer
-)
+
+from sqlalchemy import Boolean, Column, DateTime, Integer, String
+
 from app.core.database import Base, engine
 
 
