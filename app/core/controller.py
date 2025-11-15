@@ -1,12 +1,13 @@
 import logging
 
-from sqlalchemy.orm import Session
 from sqlalchemy.exc import IntegrityError
+from sqlalchemy.orm import Session
+
 from app.core.database import engine
 from app.core.query import QueryData
 
 
-class BaseController(object):
+class BaseController:
     """Base View to create helpers common to all Webservices.
     """
 
@@ -29,10 +30,12 @@ class BaseController(object):
             sort_by: str = 'id',
             order_by: str = 'desc',
             qtype: str = 'first',
-            params: dict = {},
-            **kwargs):
+            params: dict = None,
+            **_kwargs):
         """Get a record from the database.
         """
+        if params is None:
+            params = {}
         limit = limit if limit <= 100 else 100
         query_data = QueryData(
             model_class=self.model_class,
@@ -53,7 +56,7 @@ class BaseController(object):
 
         except Exception as error:
             logging.error(error)
-            raise Exception(error)
+            raise Exception(error) from error
 
         finally:
             if self.close_session:
@@ -76,7 +79,7 @@ class BaseController(object):
 
         except Exception as error:
             logging.error(error)
-            raise Exception(error)
+            raise Exception(error) from error
 
         finally:
             if self.close_session:
@@ -86,9 +89,11 @@ class BaseController(object):
             self,
             data: dict,
             id: int = None,
-            params: dict = list()):
+            params: dict = None):
         """Edit a record in the database.
         """
+        if params is None:
+            params = []
         try:
             query_model = self.db.query(self.model_class)
             if id:
@@ -118,7 +123,7 @@ class BaseController(object):
 
         except Exception as error:
             logging.error(error)
-            raise Exception(error)
+            raise Exception(error) from error
 
         finally:
             if self.close_session:
