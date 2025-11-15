@@ -1,8 +1,6 @@
 """
 Tests for authentication endpoints.
 """
-import pytest
-
 from fastapi import status
 
 
@@ -136,4 +134,3 @@ class TestRefreshToken:
             headers={"Authorization": f"Bearer {access_token}"}
         )
         assert response.status_code == status.HTTP_401_UNAUTHORIZED
-

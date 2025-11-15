@@ -81,6 +81,8 @@ def client(db_session):
         yield test_client
 
     test_app.dependency_overrides.clear()
+
+
 @pytest.fixture
 def test_user_data():
     """Sample user data for testing."""
@@ -122,4 +124,3 @@ def refresh_token(client, test_user_data):
     })
     assert response.status_code == 200
     return response.json()["refresh_token"]
-

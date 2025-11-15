@@ -1,8 +1,6 @@
 """
 Tests for item endpoints.
 """
-
-import pytest
 from fastapi import status
 
 

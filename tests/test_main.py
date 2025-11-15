@@ -1,8 +1,6 @@
 """
 Tests for main application.
 """
-
-import pytest
 from fastapi import status
 
 
@@ -47,4 +45,3 @@ class TestHealthCheck:
             status.HTTP_200_OK,
             status.HTTP_405_METHOD_NOT_ALLOWED
         ]
-
