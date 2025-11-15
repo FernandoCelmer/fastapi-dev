@@ -13,6 +13,8 @@ from app.core.database import Database
 
 security = HTTPBearer()
 auth_handler = BaseAuth()
+
+
 async def authorization(
         db: Session = Depends(Database.get_db),
         credentials: HTTPAuthorizationCredentials = Security(security)):

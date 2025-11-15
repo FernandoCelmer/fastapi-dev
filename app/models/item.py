@@ -27,8 +27,8 @@ class Item(Base):
         default=datetime.utcnow
     )
     update_date = Column(
-        DateTime, 
-        default=datetime.utcnow, 
+        DateTime,
+        default=datetime.utcnow,
         onupdate=datetime.utcnow
     )
 
