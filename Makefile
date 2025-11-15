@@ -4,7 +4,7 @@
 # Alternative: use scripts/code-quality.sh directly
 
 lint:
-	@FLAKE8_CONFIG_FILE=.code_quality/.flake8 poetry run flake8 .
+	@poetry run flake8 --append-config=.code_quality/.flake8 .
 	@poetry run ruff check --config=.code_quality/ruff.toml .
 
 format:
