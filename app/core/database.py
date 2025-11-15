@@ -1,7 +1,7 @@
 from sqlalchemy import create_engine
 from sqlalchemy.orm import registry, sessionmaker
 
-from app.core.settings import settings  # Import global settings instance
+from app.core.settings import settings
 
 engine = create_engine(
     url=settings.database_url,
