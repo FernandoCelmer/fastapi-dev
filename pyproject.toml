@@ -1,0 +1,38 @@
+[tool.poetry]
+name = "cookiecutter-fastapi"
+version = "0.1.0"
+description = "Amazing project with FastAPI!"
+authors = ["Fernando Celmer <fernando-celmer@fernandocelmer.com>"]
+license = "MIT"
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.12"
+fastapi = "^0.104.1"
+uvicorn = "^0.24.0.post1"
+python-dotenv = "^1.0.0"
+pymysql = "^1.1.0"
+pydantic-settings = "^2.1.0"
+pydantic = {extras = ["email"], version = "^2.5.3"}
+pyjwt = "^2.8.0"
+passlib = "^1.7.4"
+sqlalchemy = "^2.0.25"
+
+
+[tool.poetry.group.testing.dependencies]
+tox = "^4.11.3"
+pytest = "^7.4.3"
+
+
+[tool.poetry.group.code-quality.dependencies]
+flake8 = "^6.1.0"
+coverage = "^7.3.2"
+
+
+[tool.poetry.group.dev.dependencies]
+mkdocs = "^1.5.3"
+cookiecutter = "^2.5.0"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

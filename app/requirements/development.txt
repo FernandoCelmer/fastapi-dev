@@ -1,0 +1,12 @@
+-r base.txt
+
+# Testing
+# ------------- #
+pytest==7.4.3 ; python_version >= "3.12" and python_version < "4.0"
+# ------------- #
+
+# Code quality
+# ------------- #
+flake8==6.1.0 ; python_version >= "3.12" and python_version < "4.0"
+coverage==7.3.2 ; python_version >= "3.12" and python_version < "4.0"
+# ------------- #
