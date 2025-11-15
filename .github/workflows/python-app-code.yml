@@ -19,7 +19,6 @@ jobs:
         uses: actions/setup-python@v5
         with:
           python-version: "3.12"
-          cache: "poetry"
 
       - name: 📦 Install Poetry
         uses: snok/install-poetry@v1
@@ -27,13 +26,16 @@ jobs:
           version: latest
           virtualenvs-create: true
           virtualenvs-in-project: true
+          installer-parallel: true
 
       - name: 📚 Install dependencies
         run: poetry install --no-interaction --no-root --with code-quality
 
       - name: 🔍 Flake8 Check
+        env:
+          FLAKE8_CONFIG_FILE: .code_quality/.flake8
         run: |
-          poetry run flake8 --config=code_quality/.flake8 app/ tests/
+          poetry run flake8 app/ tests/
 
       - name: ✅ Scan Summary
         if: always()
