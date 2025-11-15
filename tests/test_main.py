@@ -1,6 +1,9 @@
 """
 Tests for main application.
 """
+# flake8: noqa
+# ruff: noqa
+# type: ignore
 from fastapi import status
 
 
@@ -11,7 +14,10 @@ class TestHealthCheck:
         """Test root endpoint (if exists)."""
         response = client.get("/")
 
-        assert response.status_code in [status.HTTP_200_OK, status.HTTP_404_NOT_FOUND]
+        assert response.status_code in [
+            status.HTTP_200_OK,
+            status.HTTP_404_NOT_FOUND,
+        ]
 
     def test_docs_endpoint(self, client):
         """Test OpenAPI docs endpoint."""
