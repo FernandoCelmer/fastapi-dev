@@ -1,23 +1,41 @@
-name: 📝️ Code Scan
+name: 📝 Code Scan
 
 on:
   push:
-    branches: [ "develop" ]
+    branches: ["develop", "main", "master"]
+  pull_request:
+    branches: ["develop", "main", "master"]
 
 jobs:
-  deploy:
-    name: deploy
+  code-scan:
+    name: Code Quality Scan
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v3
-    - name: ⚙️ Set up Python 3.12
-      uses: actions/setup-python@v3
-      with:
-        python-version: "3.12"
-    - name: ⚙️ Install Python dependencies
-      run: |
-        python -m pip install --upgrade pip
-        pip install flake8 --no-cache-dir
-    - name: ❤️️ Code Quality with flake8
-      run: flake8
+      - name: 📥 Checkout code
+        uses: actions/checkout@v4
+
+      - name: 🐍 Set up Python 3.12
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: "poetry"
+
+      - name: 📦 Install Poetry
+        uses: snok/install-poetry@v1
+        with:
+          version: latest
+          virtualenvs-create: true
+          virtualenvs-in-project: true
+
+      - name: 📚 Install dependencies
+        run: poetry install --no-interaction --no-root --with code-quality
+
+      - name: 🔍 Flake8 Check
+        run: |
+          poetry run flake8 --config=code_quality/.flake8 app/ tests/
+
+      - name: ✅ Scan Summary
+        if: always()
+        run: |
+          echo "### Code Scan Completed ✅" >> $GITHUB_STEP_SUMMARY
