@@ -58,4 +58,3 @@ jobs:
           echo "### Code Quality Checks Completed ✅" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "All code quality tools have been executed." >> $GITHUB_STEP_SUMMARY
-
