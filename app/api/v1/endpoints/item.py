@@ -17,7 +17,7 @@ router = APIRouter()
 )
 async def get_items(
     _auth=Depends(authorization)
-):
+) -> dict[str, str]:
     """Get all items."""
     return {"resource": "item"}
 
@@ -26,6 +26,6 @@ async def get_items(
 async def get_item(
     item_id: UUID,
     _auth=Depends(authorization)
-):
+) -> dict[str, str | UUID]:
     """Get a specific item by ID."""
     return {"item_id": item_id, "resource": "item"}
