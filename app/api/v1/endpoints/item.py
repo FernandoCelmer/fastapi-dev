@@ -17,7 +17,7 @@ router = APIRouter()
     response_description="List of items",
 )
 async def get_items(
-    _auth=Depends(authorization)
+    _auth=Depends(authorization),
 ) -> dict[str, str]:
     """Get all items."""
     return {"resource": "item"}

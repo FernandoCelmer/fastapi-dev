@@ -12,13 +12,13 @@ import pytest
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.testclient import TestClient
+from fastapi.staticfiles import StaticFiles
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.pool import StaticPool
 
 from app.api.v1 import api_router as v1_router
 from app.core.auth.endpoints import auth
-from fastapi.staticfiles import StaticFiles
 from app.core.database import Base, Database
 from app.core.settings import settings
 
@@ -116,7 +116,10 @@ def auth_headers(client, test_user):
     """Get authentication headers for authenticated requests."""
     response = client.post(
         "/auth/login",
-        json={"email": test_user["email"], "password": "testpassword123"},
+        json={
+            "email": test_user["email"],
+            "password": "testpassword123",
+        },
     )
     assert response.status_code == 200
     tokens = response.json()
@@ -128,7 +131,10 @@ def refresh_token(client, test_user):
     """Get refresh token for testing."""
     response = client.post(
         "/auth/login",
-        json={"email": test_user["email"], "password": "testpassword123"},
+        json={
+            "email": test_user["email"],
+            "password": "testpassword123",
+        },
     )
     assert response.status_code == 200
     return response.json()["refresh_token"]

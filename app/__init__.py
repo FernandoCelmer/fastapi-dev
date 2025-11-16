@@ -15,7 +15,7 @@ from fastapi.staticfiles import StaticFiles
 from app.api.v1 import api_router as v1_router
 from app.core.auth.endpoints import auth
 from app.core.settings import settings
-from app.core.templates import templates
+
 
 app = FastAPI(
     title="FastAPI Template",
@@ -44,7 +44,13 @@ def create_app() -> FastAPI:
             StaticFiles(directory=str(static_dir)),
             name="static",
         )
-    app.include_router(auth, prefix="/auth")
-    app.include_router(v1_router, prefix=settings.api_v1_prefix)
+    app.include_router(
+        auth,
+        prefix="/auth",
+    )
+    app.include_router(
+        v1_router,
+        prefix=settings.api_v1_prefix,
+    )
 
     return app
