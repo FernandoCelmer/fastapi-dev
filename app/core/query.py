@@ -14,9 +14,7 @@ class QueryField:
 
 
 class QueryData:
-    def __new__(
-        cls, model_class: Base, params: dict
-    ) -> list[QueryField]:
+    def __new__(cls, model_class: Base, params: dict) -> list[QueryField]:
         return cls.setup(model_class=model_class, params=params)
 
     def __init__(self, model_class: Base, params: dict) -> None:

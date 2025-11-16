@@ -58,7 +58,7 @@ async def login(user: SchemaLogin, db: Session = Depends(Database.get_db)):
 
 @auth.get("/refresh_token")
 async def refresh_token(
-    credentials: HTTPAuthorizationCredentials = Security(security)
+    credentials: HTTPAuthorizationCredentials = Security(security),
 ):
     refresh_token = credentials.credentials
     new_token = auth_handler.refresh_token(refresh_token)
