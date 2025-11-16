@@ -42,7 +42,7 @@ def create_app() -> FastAPI:
         app.mount(
             "/static",
             StaticFiles(directory=str(static_dir)),
-            name="static"
+            name="static",
         )
     app.include_router(auth, prefix="/auth")
     app.include_router(v1_router, prefix=settings.api_v1_prefix)
