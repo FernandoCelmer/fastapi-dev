@@ -11,6 +11,7 @@ from fastapi import status
 
 class TestItem:
     """Tests for item endpoint."""
+
     def test_get_items_success_with_auth(self, client, auth_headers):
         """Test successful items retrieval with authentication."""
         response = client.get("/api/v1/items", headers=auth_headers)

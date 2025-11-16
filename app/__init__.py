@@ -4,7 +4,7 @@ This module contains the FastAPI application.
 
 __version__ = "0.1.0"
 
-__author__ = 'Fernando Celmer <fernando-celmer@fernandocelmer.com>'
+__author__ = "Fernando Celmer <fernando-celmer@fernandocelmer.com>"
 
 from pathlib import Path
 
@@ -15,7 +15,6 @@ from fastapi.staticfiles import StaticFiles
 from app.api.v1 import api_router as v1_router
 from app.core.auth.endpoints import auth
 from app.core.settings import settings
-
 
 app = FastAPI(
     title="FastAPI Template",

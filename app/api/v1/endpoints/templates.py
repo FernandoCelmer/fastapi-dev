@@ -8,6 +8,8 @@ from fastapi.responses import HTMLResponse
 from app.core.templates import templates
 
 router = APIRouter()
+
+
 @router.get(
     "/",
     response_class=HTMLResponse,
