@@ -2,7 +2,7 @@
 # Modern and fast Python linter
 
 # Line length
-line-length = 88
+line-length = 79
 
 # Target Python version
 target-version = "py312"
