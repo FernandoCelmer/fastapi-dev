@@ -5,7 +5,6 @@ Item endpoints.
 from uuid import UUID
 
 from fastapi import APIRouter, Depends
-
 from app.core.auth.security import authorization
 
 router = APIRouter()

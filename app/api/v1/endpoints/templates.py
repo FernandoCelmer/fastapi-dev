@@ -23,4 +23,3 @@ async def home(request: Request) -> HTMLResponse:
             "project_name": "FastAPI Template",
         },
     )
-
