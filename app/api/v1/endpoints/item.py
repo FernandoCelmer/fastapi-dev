@@ -23,10 +23,13 @@ async def get_items(
     return {"resource": "item"}
 
 
-@router.get("/{item_id}", summary="Get item by ID")
+@router.get(
+    "/{item_id}",
+    summary="Get item by ID",
+)
 async def get_item(
     item_id: UUID,
-    _auth=Depends(authorization)
+    _auth=Depends(authorization),
 ) -> dict[str, str | UUID]:
     """Get a specific item by ID."""
     return {"item_id": item_id, "resource": "item"}
