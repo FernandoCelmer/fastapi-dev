@@ -3,6 +3,7 @@ API v1 router.
 """
 
 from fastapi import APIRouter
+
 from app.api.v1.endpoints import item, templates
 
 api_router = APIRouter()
