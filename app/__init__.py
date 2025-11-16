@@ -6,7 +6,6 @@ __version__ = "0.1.0"
 
 __author__ = 'Fernando Celmer <fernando-celmer@fernandocelmer.com>'
 
-
 from pathlib import Path
 
 from fastapi import FastAPI
@@ -15,8 +14,8 @@ from fastapi.staticfiles import StaticFiles
 
 from app.api.v1 import api_router as v1_router
 from app.core.auth.endpoints import auth
-from app.core.templates import templates
 from app.core.settings import settings
+from app.core.templates import templates
 
 app = FastAPI(
     title="FastAPI Template",
