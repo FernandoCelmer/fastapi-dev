@@ -3,8 +3,9 @@ This module contains the auth user model.
 """
 
 from datetime import datetime
+from uuid import uuid4
 
-from sqlalchemy import Boolean, Column, DateTime, Integer, String
+from sqlalchemy import Boolean, Column, DateTime, String
 
 from app.core.controller import BaseController
 from app.core.database import Base, engine
@@ -16,7 +17,12 @@ class AuthUser(Base):
     __tablename__ = "auth_user"
     __table_args__ = {"extend_existing": True}
 
-    id = Column(Integer, primary_key=True, index=True)
+    id = Column(
+        String(36),
+        primary_key=True,
+        default=lambda: str(uuid4()),
+        index=True
+    )
     email = Column(String(75), unique=True)
     username = Column(String(45), unique=True)
     password = Column(String(100), unique=True)

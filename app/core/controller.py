@@ -3,6 +3,7 @@ This module contains the base controller.
 """
 
 import logging
+from uuid import UUID
 
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy.orm import Session
@@ -93,7 +94,7 @@ class BaseController:
                 self.db.close()
 
     def update(
-        self, data: dict, id: int | None = None, params: dict | None = None
+        self, data: dict, id: UUID | None = None, params: dict | None = None
     ):
         """Edit a record in the database."""
         if self.model_class is None:

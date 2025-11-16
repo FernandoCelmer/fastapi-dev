@@ -1,8 +1,8 @@
-# cookiecutter-fastapi
+# FastAPI Template
 
 Amazing project with FastAPI!
 
-- **Documentation**: [#](#/)
+- **Documentation**: [#](#)
 - **Source Code**: [#](#)
 
 ### Commit Style
@@ -20,4 +20,3 @@ Amazing project with FastAPI!
 ### License
 
 This project is licensed under the terms of the MIT license.
-

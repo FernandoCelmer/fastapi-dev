@@ -2,6 +2,7 @@
 This module contains the item schemas.
 """
 
+from uuid import UUID
 
 from pydantic import BaseModel
 
@@ -29,7 +30,7 @@ class SchemaCreate(SchemaBase):
 class Schema(SchemaBase):
     """Schema for the item."""
 
-    id: int
+    id: UUID
 
     class Config:
         """Config for the item."""

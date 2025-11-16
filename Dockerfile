@@ -18,17 +18,17 @@ RUN apt-get update && \
     rm -rf /var/lib/apt/lists/*
 
 RUN pip install --upgrade pip && \
-    pip install poetry==1.7.1 && \
+    pip install poetry>=1.8.0 && \
     poetry config virtualenvs.create false
 
 COPY pyproject.toml poetry.lock* ./
 
-RUN poetry install --no-dev --no-root && \
+RUN poetry install --without dev --no-root && \
     rm -rf $POETRY_CACHE_DIR
 
 COPY . /app/
 
-RUN poetry install --no-dev --only-root
+RUN poetry install --only-root
 
 RUN useradd --create-home --shell /bin/bash appuser && \
     chown -R appuser:appuser /app
@@ -38,4 +38,3 @@ USER appuser
 EXPOSE 8000
 
 CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000"]
-

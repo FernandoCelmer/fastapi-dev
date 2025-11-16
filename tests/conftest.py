@@ -6,6 +6,7 @@ Configuration for pytest tests.
 # type: ignore
 
 import os
+from pathlib import Path
 
 import pytest
 from fastapi import FastAPI
@@ -17,12 +18,15 @@ from sqlalchemy.pool import StaticPool
 
 from app.api.v1 import api_router as v1_router
 from app.core.auth.endpoints import auth
+from fastapi.staticfiles import StaticFiles
 from app.core.database import Base, Database
 from app.core.settings import settings
 
 os.environ["SCOPE"] = "test"
 os.environ["DATABASE_URL"] = "sqlite:///:memory:"
-os.environ["SECRET_KEY"] = "test-secret-key-for-testing-only-min-32-chars"
+os.environ["SECRET_KEY"] = (
+    "test-secret-key-for-testing-only-min-32-chars"
+)
 
 
 @pytest.fixture(scope="function")
@@ -72,6 +76,13 @@ def client(db_session):
         allow_methods=["*"],
         allow_headers=["*"],
     )
+    static_dir = Path("/home") / "static"
+    if static_dir.exists():
+        test_app.mount(
+            "/static",
+            StaticFiles(directory=str(static_dir)),
+            name="static"
+        )
     test_app.include_router(auth, prefix="/auth")
     test_app.include_router(v1_router, prefix=settings.api_v1_prefix)
     test_app.dependency_overrides[Database.get_db] = override_get_db
@@ -80,8 +91,6 @@ def client(db_session):
         yield test_client
 
     test_app.dependency_overrides.clear()
-
-
 @pytest.fixture
 def test_user_data():
     """Sample user data for testing."""
